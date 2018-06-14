@@ -1,0 +1,18 @@
+{
+    "name": "Intelligent Bookmarks",
+    "version": "0.1",
+    "manifest_version": 2,
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.google.co.in/search?q=*"
+            ],
+            "js": ["content.js"]
+        }
+    ],
+
+    "browser_action": {
+        "default_popup": "popup-ui/popui.html"
+    }
+}
