@@ -1,3 +1,5 @@
+/*! jQuery v3.3.1 | (c) JS Foundation and other contributors | jquery.org/license */
+
 var saveButton = document.createElement('button');
 var saveText = document.createTextNode('Save');
 saveButton.appendChild(saveText);
@@ -14,9 +16,13 @@ for (var i = 0; i < body.length; ++i) {
     var childNode = saveButton.cloneNode(true);
     childNode.addEventListener('click', saveBtnHandler);
     hyperlink = body[i].childNodes[0].childNodes[0].getAttribute('href');
+    raw_tag_string = body[i].childNodes[1].childNodes[0].childNodes[1].innerText;
     childNode.setAttribute('id', hyperlink);
+    childNode.setAttribute('tag_data_raw', raw_tag_string);
     body[i].appendChild(childNode);
+    
     console.log(hyperlink);
+    console.log(body[i].childNodes[1].childNodes[0].childNodes[1].innerText);
 }
 
 function saveBtnHandler(e) {
@@ -24,6 +30,20 @@ function saveBtnHandler(e) {
     chrome.storage.local.get('val', function(d) {
         var currentData = d.val;
         console.log(currentData);
+        
+        //var tag_list = getTagsAPI(searchString + ' ' + e.target.getAttribute('tag_data_raw'));
+        getTagsAPI2(searchString + ' ' + e.target.getAttribute('tag_data_raw'));
+
+        //console.log(tag_list);
+        // for (var i=0; i<tag_list.length; i++) {
+        //     if (!(tag_list[i] in currentData)) {
+        //         currentData[tag_list[i]] = [e.target.getAttribute('id')];
+        //     }
+        //     else {
+        //         currentData[tag_list[i]].push(e.target.getAttribute('id'));
+        //     } 
+        // }
+
         if (!(searchString in currentData)) {
             currentData[searchString] = [e.target.getAttribute('id')];
         }
@@ -35,9 +55,64 @@ function saveBtnHandler(e) {
 
         chrome.storage.local.set({'val': currentData});
     });
+
+    //chrome.storage.local.set({'val': {}});
+}
+
+function getTagsAPI(metadata) {
+    // var tag_list = ["test", "strings"];
+     
+
+    body = {
+        "documents": [
+        {
+            "id": "1",
+            "text": metadata
+            
+        }
+        ]
+    }
+
+    let config = {
+        headers: {
+            "Ocp-Apim-Subscription-Key": "48d8b1f950314975925d36a8554d4172",
+        }
+    }
+    
+    promis = axios.post('https://eastasia.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases',body,config)
+        .then(function(resp){ return resp.data.documents[0].keyPhrases })
+        .catch( function(err){console.log(err)});
+    promis.then(function(res) { return res});
+}
+
+function getTagsAPI2(metadata) {
+    // $.ajax({
+    //     url: "https://eastasia.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases",
+    //     beforeSend: function(xhrObj){
+    //         // Request headers
+    //         xhrObj.setRequestHeader("Content-Type","application/json");
+    //         xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","{48d8b1f950314975925d36a8554d4172}");
+    //     },
+    //     type: "POST",
+    //     // Request body
+    //     data: {body},
+    // })
+    // .done(function(data) {
+    //     alert(data);
+    //     console.log('in done')
+    // })
+    // .fail(function() {
+    //     alert("error");
+    // });
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "https://eastasia.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("Ocp-Apim-Subscription-Key","48d8b1f950314975925d36a8554d4172")
 }
 
 var searchString = document.getElementById('lst-ib').getAttribute('value');
 chrome.storage.local.set({
     'sstring': searchString
 });
+
