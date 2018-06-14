@@ -41,3 +41,17 @@ var searchString = document.getElementById('lst-ib').getAttribute('value');
 chrome.storage.local.set({
     'sstring': searchString
 });
+
+document.addEventListener('mouseup', function (mousePos) {
+
+    var p = {
+        clientX: mousePos.clientX,
+        clientY: mousePos.clientY
+    };
+    var msg = {
+        text: 'example',
+        point: p,
+        from: 'mouseup'
+    };
+    chrome.runtime.sendMessage(msg, function (response) {});
+})
