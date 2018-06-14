@@ -16,13 +16,20 @@ for (var i = 0; i < body.length; ++i) {
     var childNode = saveButton.cloneNode(true);
     childNode.addEventListener('click', saveBtnHandler);
     hyperlink = body[i].childNodes[0].childNodes[0].getAttribute('href');
-    raw_tag_string = body[i].childNodes[1].childNodes[0].childNodes[1].innerText;
+    LinkHeading = body[i].childNodes[0].childNodes[0].innerText;
+    console.log(body[i].childNodes[0].childNodes[0].innerText)
+    raw_tag_string = ""
+    try{
+        raw_tag_string = body[i].childNodes[1].childNodes[0].childNodes[1].innerText;
+    }catch(e){
+    }
     childNode.setAttribute('id', hyperlink);
     childNode.setAttribute('tag_data_raw', raw_tag_string);
+    childNode.setAttribute('title', LinkHeading);
     body[i].appendChild(childNode);
     
-    console.log(hyperlink);
-    console.log(body[i].childNodes[1].childNodes[0].childNodes[1].innerText);
+    //console.log(hyperlink);
+    //console.log(body[i].childNodes[1].childNodes[0].childNodes[1].innerText);
 }
 
 function saveBtnHandler(e) {
@@ -32,7 +39,7 @@ function saveBtnHandler(e) {
         console.log(currentData);
         
         //var tag_list = getTagsAPI(searchString + ' ' + e.target.getAttribute('tag_data_raw'));
-        getTagsAPI2(searchString + ' ' + e.target.getAttribute('tag_data_raw'));
+        getTagsAPI2(searchString + ' ' + e.target.getAttribute('tag_data_raw'), e.target.getAttribute('id'), e.target.getAttribute('title'));
 
         //console.log(tag_list);
         // for (var i=0; i<tag_list.length; i++) {
@@ -44,19 +51,19 @@ function saveBtnHandler(e) {
         //     } 
         // }
 
-        if (!(searchString in currentData)) {
-            currentData[searchString] = [e.target.getAttribute('id')];
-        }
-        else {
-            currentData[searchString].push(e.target.getAttribute('id'));
-        }
-        console.log('final');
-        console.log(currentData);
+        // if (!(searchString in currentData)) {
+        //     currentData[searchString] = [e.target.getAttribute('id')];
+        // }
+        // else {
+        //     currentData[searchString].push(e.target.getAttribute('id'));
+        // }
+        // console.log('final');
+        // console.log(currentData);
 
-        chrome.storage.local.set({'val': currentData});
+        // chrome.storage.local.set({'val': currentData});
     });
 
-    //chrome.storage.local.set({'val': {}});
+    // chrome.storage.local.set({'val': {}});
 }
 
 function getTagsAPI(metadata) {
@@ -85,30 +92,18 @@ function getTagsAPI(metadata) {
     promis.then(function(res) { return res});
 }
 
-function getTagsAPI2(metadata) {
-    // $.ajax({
-    //     url: "https://eastasia.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases",
-    //     beforeSend: function(xhrObj){
-    //         // Request headers
-    //         xhrObj.setRequestHeader("Content-Type","application/json");
-    //         xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","{48d8b1f950314975925d36a8554d4172}");
-    //     },
-    //     type: "POST",
-    //     // Request body
-    //     data: {body},
-    // })
-    // .done(function(data) {
-    //     alert(data);
-    //     console.log('in done')
-    // })
-    // .fail(function() {
-    //     alert("error");
-    // });
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "https://eastasia.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.setRequestHeader("Ocp-Apim-Subscription-Key","48d8b1f950314975925d36a8554d4172")
+function getTagsAPI2(metadata, hyperlink, linkTitle) {
+    console.log("Printing metadata "+ metadata);
+    var msg = {
+        from: 'content',
+        data: metadata,
+        link: hyperlink,
+        title : linkTitle
+    }
+    chrome.runtime.sendMessage(msg, function(response) {
+        console.log(response);
+        console.log("ok got ting from background");
+    });
 }
 
 var searchString = document.getElementById('lst-ib').getAttribute('value');
@@ -116,19 +111,3 @@ chrome.storage.local.set({
     'sstring': searchString
 });
 
-<<<<<<< HEAD
-=======
-document.addEventListener('mouseup', function (mousePos) {
-
-    var p = {
-        clientX: mousePos.clientX,
-        clientY: mousePos.clientY
-    };
-    var msg = {
-        text: 'example',
-        point: p,
-        from: 'mouseup'
-    };
-    chrome.runtime.sendMessage(msg, function (response) {});
-})
->>>>>>> 6f5e2def2e7661f0b91c441b379e0640eb095f5f

@@ -22,7 +22,7 @@
     },
 
     "permissions": [
-        "storage",
-        "contextMenus"
-    ]
+        "storage"
+    ],
+    "content_security_policy": "script-src 'self' https://api.jquery.com/jquery.get/; object-src 'self'"
 }
