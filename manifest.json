@@ -6,7 +6,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://www.google.co.in/search?q=*"
+                "https://www.google.co.in/search?*"
             ],
             "js": ["content.js"]
         }
@@ -14,5 +14,9 @@
 
     "browser_action": {
         "default_popup": "popup-ui/popui.html"
-    }
+    },
+
+    "permissions": [
+        "storage"
+    ]
 }
