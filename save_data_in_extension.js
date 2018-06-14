@@ -8,7 +8,8 @@ function saveChanges( words_searched, result_link_to_search) {
     });
   }
 
-  function extract_keys_for_search ()
+  
+  function extract_key_for_search ()
   {
     chrome.storage.sync.get([], function(total_saved_data) {
         compare_with_search_word(total_saved_data);
