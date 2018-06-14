@@ -16,7 +16,13 @@
         "default_popup": "popup-ui/popui.html"
     },
 
+    "background":{
+        "scripts":["eventpage.js"],
+        "persistent":false
+    },
+
     "permissions": [
-        "storage"
+        "storage",
+        "contextMenus"
     ]
 }
