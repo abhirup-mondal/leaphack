@@ -116,3 +116,19 @@ chrome.storage.local.set({
     'sstring': searchString
 });
 
+<<<<<<< HEAD
+=======
+document.addEventListener('mouseup', function (mousePos) {
+
+    var p = {
+        clientX: mousePos.clientX,
+        clientY: mousePos.clientY
+    };
+    var msg = {
+        text: 'example',
+        point: p,
+        from: 'mouseup'
+    };
+    chrome.runtime.sendMessage(msg, function (response) {});
+})
+>>>>>>> 6f5e2def2e7661f0b91c441b379e0640eb095f5f
