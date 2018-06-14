@@ -1,9 +1,18 @@
 var doc = document.getElementById('test-list');
 
 chrome.storage.local.get('val', function (items) {
-
+    if(!val)
+    {
+        console.log("No list received");
+            break;
+    }
     searchString = undefined;
     chrome.storage.local.get('sstring', function(str) {
+        if(!sstring)
+        {
+            console.log("No value received");
+            break;
+        }
         console.log(str);
         searchString = str.sstring;
         console.log(searchString);
