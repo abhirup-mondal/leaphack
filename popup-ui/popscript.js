@@ -4,7 +4,7 @@ chrome.storage.local.get('val', function (items) {
     if(!items)
     {
         console.log("No list received");
-          
+
     }
     searchString = undefined;
     chrome.storage.local.get('sstring', function(str) {
@@ -47,6 +47,9 @@ chrome.storage.local.get('val', function (items) {
             var t = document.createTextNode(linkInfo[1]);
             a.appendChild(t);
             li.appendChild(a);
+
+            li.setAttribute('class', 'iblistitemcont')
+            a.setAttribute('class', 'iblistitem')
 
             document.getElementById('test-list').appendChild(li);
         }

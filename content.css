@@ -1,0 +1,34 @@
+.button {
+    border: none;
+}
+
+.saveButton {
+    font-family: 'Work Sans';
+    font-size: 15px;
+
+    border-radius: 100px;
+    border-color: darkolivegreen;
+
+    color: darkslategray;
+
+    transition: all 0.3s ease;
+}
+
+.rc > .saveButton {
+    visibility: hidden;
+}
+
+.rc:hover > .saveButton {
+    visibility: visible;
+}
+
+.rc {
+    transition: all 0.3s ease;
+}
+
+.saveButton:hover {
+    background-color: darkolivegreen;
+    color: white;
+
+    transition: all 0.2s ease;
+}

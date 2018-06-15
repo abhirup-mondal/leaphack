@@ -27,7 +27,7 @@ for (var i = 0; i < body.length; ++i) {
     childNode.setAttribute('tag_data_raw', raw_tag_string);
     childNode.setAttribute('title', LinkHeading);
     body[i].appendChild(childNode);
-    
+
     //console.log(hyperlink);
     //console.log(body[i].childNodes[1].childNodes[0].childNodes[1].innerText);
 }
@@ -37,7 +37,7 @@ function saveBtnHandler(e) {
     chrome.storage.local.get('val', function(d) {
         var currentData = d.val;
         console.log(currentData);
-        
+
         //var tag_list = getTagsAPI(searchString + ' ' + e.target.getAttribute('tag_data_raw'));
         getTagsAPI2(searchString + ' ' + e.target.getAttribute('tag_data_raw'), e.target.getAttribute('id'), e.target.getAttribute('title'));
 
@@ -48,7 +48,7 @@ function saveBtnHandler(e) {
         //     }
         //     else {
         //         currentData[tag_list[i]].push(e.target.getAttribute('id'));
-        //     } 
+        //     }
         // }
 
         // if (!(searchString in currentData)) {
@@ -68,14 +68,14 @@ function saveBtnHandler(e) {
 
 function getTagsAPI(metadata) {
     // var tag_list = ["test", "strings"];
-     
+
 
     body = {
         "documents": [
         {
             "id": "1",
             "text": metadata
-            
+
         }
         ]
     }
@@ -85,7 +85,7 @@ function getTagsAPI(metadata) {
             "Ocp-Apim-Subscription-Key": "48d8b1f950314975925d36a8554d4172",
         }
     }
-    
+
     promis = axios.post('https://eastasia.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases',body,config)
         .then(function(resp){ return resp.data.documents[0].keyPhrases })
         .catch( function(err){console.log(err)});

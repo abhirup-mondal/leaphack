@@ -8,6 +8,7 @@
             "matches": [
                 "https://www.google.co.in/search?*"
             ],
+            "css": ["content.css"],
             "js": ["content.js"]
         }
     ],

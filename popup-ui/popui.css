@@ -1,6 +1,42 @@
-.saveBtn {
-    color: white;
-    background-color: green;
+.pop-parent {
+    max-width: 300px;
+    min-width: 300px;
 
-    font-size: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.iblistitem {
+    color: inherit;
+    font-family: 'Work Sans';
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.iblistitemcont {
+    color: black;
+    margin: 2px;
+    padding: 10px;
+    width: auto;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    transition: all 0.5s ease;
+}
+
+.iblistitemcont:hover{
+    background-color: darkolivegreen;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px !important;
+}
+
+body {
+    margin: 0px;
 }
